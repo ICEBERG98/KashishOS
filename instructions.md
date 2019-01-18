@@ -1,6 +1,6 @@
 # Instructions and after you become a Collaborator
 
-### 1. The work to be done is in a linux environment. Clone this repository and replace "https://github.com/ICEBERG98/OSDev" with the URL of your repository
+### 1. The work to be done is in a linux environment. Firstly, <b>fork</b> this repository and then, replace "https://github.com/ICEBERG98/OSDev" with the URL of your repository
 ### 2. Choose your working directory and clone the Repository into that using the following command
 	git clone https://github.com/ICEBERG98/OSDev
 ### 3. <i>cd</i> to the newly created OSDev directory.
