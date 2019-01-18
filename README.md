@@ -2,7 +2,7 @@
 ## OSDev for Project
 
 ### Collaborators-
-1. Kashish-Soni
+1. Kashish Soni
 1. Karandeep Saini
 1. Gourav Sharma
 
