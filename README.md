@@ -3,8 +3,9 @@
 
 ### Collaborators-
 1. Kashish Soni
-1. Karandeep Saini
-1. Gourav Sharma
+2. Karandeep Saini
+3. Gourav Sharma
+4. Aditi Rana
 
 ### For any References/Help Please Lookup <a href="https://wiki.osdev.org">The OSDevelopers wiki</a>
 
