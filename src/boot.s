@@ -17,7 +17,6 @@ forced to be within the first 8 KiB of the kernel file.
 .long MAGIC
 .long FLAGS
 .long CHECKSUM
- 
 /*
 The multiboot standard does not define the value of the stack pointer register
 (esp) and it is up to the kernel to provide a stack. This allocates room for a
@@ -101,9 +100,30 @@ _start:
 	cli
 1:	hlt
 	jmp 1b
- 
+
 /*
 Set the size of the _start symbol to the current location '.' minus its start.
 This is useful when debugging or when you implement call tracing.
 */
 .size _start, . - _start
+
+/*
+This will set up our new segment registers.  We need to do
+something special in order to set CS.  We do what is called
+a far jump.  A jump that includes a segment as well as an
+offset.  This is declared in C as 'extern void gdt_flush();'
+*/
+.global _gdt_flush	/*; Allows the C code to link to this*/
+.extern _gp		/* Says that '_gp' is in another file*/
+_gdt_flush:
+	lgdt _gp	/* Load the GDT with our '_gp' which is a special pointer*/
+	mov $0x10,%ax	/* 0x10 is the offset in the GDT to our data segment*/
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %ax, %ss
+	ljmp $0x08,$flush2	/* 0x08 is the offset to our code segment: Far jump!*/
+flush2:
+	ret		/*; Returns back to the C code!*/
+
