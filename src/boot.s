@@ -127,3 +127,13 @@ _gdt_flush:
 flush2:
 	ret		/*; Returns back to the C code!*/
 
+
+
+/*ads the IDT defined in '_idtp' into the processor.
+; This is declared in C as 'extern void _idt_load();'*/
+
+.global _idt_load
+.extern _idtp
+_idt_load:
+	lidt _idtp
+	ret

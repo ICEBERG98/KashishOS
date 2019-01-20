@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
- 
+#include "system.h" 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
 #error "You are not using a cross-compiler, you will most certainly run into trouble"
@@ -12,10 +12,33 @@
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
-extern void _gdt_flush();
-extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
-extern void gdt_install();
 
+/*--------------------------------------------MEMORY SET FUNCTIONS---------------------------------------------*/
+
+void *memcpy(void *dest, const void *src, size_t n)
+{
+    char *dp = dest;
+    const char *sp = src;
+    while (n--)
+        *dp++ = *sp++;
+    return dest;
+}
+
+void* memset(void* s, int c, size_t n)
+{
+ 	unsigned char* p=s;
+ 	while(n--)
+		*p++ = (unsigned char)c;
+	return s;
+}
+
+unsigned short* memsetw(unsigned short* dest, unsigned short val, int count)
+{
+	int i;
+	for (i = 0; i < count; i++)
+		dest[i] = val;
+	return dest;
+}
 
 /* Hardware text mode color constants. */
 enum vga_color {
@@ -121,6 +144,8 @@ void kernel_main(void)
 	terminal_initialize();
 	/* Initialise The GDT */
 	gdt_install();
+	/*Initialize The IDT */
+	idt_install();
 	/* Newline support is left as an exercise. */
 	terminal_writestring("Hello, kernel World!\nNewLine");
 }
