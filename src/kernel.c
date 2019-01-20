@@ -144,8 +144,10 @@ void kernel_main(void)
 	terminal_initialize();
 	/* Initialise The GDT */
 	gdt_install();
-	/*Initialize The IDT */
+	/* Initialize The IDT */
 	idt_install();
+	/* Initialize the Interrupt Service Routines */
+	isrs_install();
 	/* Newline support is left as an exercise. */
-	terminal_writestring("Hello, kernel World!\nNewLine");
+	terminal_writestring("Hello, kernel World!\nNewLine is being Supported\nGDT is supported\nIDT is supported\nInterrupt Service Request are being Handled");
 }

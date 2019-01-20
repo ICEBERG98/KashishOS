@@ -137,3 +137,41 @@ flush2:
 _idt_load:
 	lidt _idtp
 	ret
+
+
+isr_common_stub:
+	pusha
+	push %ds
+	push %es
+	push %fs
+	push %gs
+	mov $0x10,%ax	/*; Load the Kernel Data Segment descriptor!*/
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %esp, %eax	/*; Push us the stack*/
+	push %eax
+	mov $_fault_handler, %eax
+	call *%eax	/*; A special call, preserves the 'eip' register*/
+	pop %eax
+	pop %gs
+	pop %fs
+	pop %es
+	pop %ds
+	popa	
+	add $0x08, %esp	/*; Cleans up the pushed error code and pushed ISR number*/
+	iret		/*; Pops 5 things at once: CS, EIP, EFLAGS, SS and ESP!*/
+
+/*; Grab the long list of interrupt service routing labels and
+; their handlers from isr.asm.*/
+.include "isr.s"
+
+/*; We call a C function in here.  We need to let the assembler
+; know that '_fault_handler' exists in another file.*/
+.extern _fault_handler
+
+/*; This is our common ISR stub.  It saves the processor state, sets
+; up for kernel mode segments, calls the C-level fault handler,
+; and finally restores the stack frame./
+i
