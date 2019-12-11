@@ -1,12 +1,6 @@
 # OSDev
 ## OSDev for Project
 
-### Collaborators-
-1. Kashish Soni
-2. Karandeep Saini
-3. Gourav Sharma
-4. Aditi Rana
-
 ### For any References/Help Please Lookup <a href="https://wiki.osdev.org">The OSDevelopers wiki</a>
 
 - #### Also, Please Join <b>Discord</b>, It can be downloaded <a href="https://discordapp.com/"> here </a>. Invite Link-https://discord.gg/saDD7jM
